@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { useFetch } from "../hooks/useFetch";
 
 const AlbumPage = styled.div`
   display: flex;
@@ -19,9 +20,19 @@ const AlbumContainer = styled.div`
 const PhotoCard = styled.div`
   display: flex;
   flex-direction: column;
+  border: 1px solid #e3e3e3;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   margin: 10px;
   width: 150px;
   cursor: pointer;
+`;
+
+const Description = styled.p`
+  padding: 0 15px;
+  &:first-letter {
+    text-transform: capitalize;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -38,26 +49,20 @@ export interface Photo {
 }
 
 const Album = () => {
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const url = "http://jsonplaceholder.typicode.com/photos";
 
-  useEffect(() => {
-    fetch("http://jsonplaceholder.typicode.com/photos")
-      .then((response) => response.json())
-      .then((json: Photo[]) => {
-        setPhotos(json);
-      });
-  }, []);
+  const photos = useFetch(url) as Photo[];
 
   return (
     <AlbumPage>
       <h1>Album</h1>
-      {photos?.length ? (
+      {photos ? (
         <AlbumContainer>
           {photos?.map((photo) => (
             <PhotoCard key={photo.id}>
               <StyledLink to={`/photo/${photo.id}`}>
                 <img src={photo.thumbnailUrl} alt={photo.title} />
-                <p>{photo.title}</p>
+                <Description>{photo.title}</Description>
               </StyledLink>
             </PhotoCard>
           ))}

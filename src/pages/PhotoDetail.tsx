@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { useFetch } from "../hooks/useFetch";
 import { Photo } from "./Album";
 
 const Container = styled.div`
@@ -18,14 +19,11 @@ const StyledButton = styled.button`
 
 const PhotoDetail = () => {
   const navigate = useNavigate();
-  const [photo, setPhoto] = useState<Photo>();
   const { id } = useParams();
 
-  useEffect(() => {
-    fetch(`http://jsonplaceholder.typicode.com/photos/${Number(id)}`)
-      .then((response) => response.json())
-      .then((json: Photo) => setPhoto(json));
-  }, [id]);
+  const url = `http://jsonplaceholder.typicode.com/photos/${Number(id)}`;
+
+  const photo = useFetch(url) as Photo;
 
   return (
     <Container>
