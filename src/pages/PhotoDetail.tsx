@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import Spinner from "../components/Spinner";
 import { useFetch } from "../hooks/useFetch";
 import { Photo } from "./Album";
+import Spinner from "../components/Spinner";
 
 const Container = styled.div`
   display: flex;

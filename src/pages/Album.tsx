@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Spinner from "../components/Spinner";
 import { useFetch } from "../hooks/useFetch";
+import Spinner from "../components/Spinner";
 
 const AlbumPage = styled.div`
   display: flex;
@@ -43,9 +43,9 @@ const StyledLink = styled(Link)`
 export interface Photo {
   albumId: number;
   id: number;
+  thumbnailUrl: string;
   title: string;
   url: string;
-  thumbnailUrl: string;
 }
 
 const Album = () => {
